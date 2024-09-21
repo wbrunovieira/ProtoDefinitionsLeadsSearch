@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package leadpb;
+
+
+option go_package = "github.com/wbrunovieira/ProtoDefinitionsLeadsSearch/leadpb";
+
+
+
+service LeadService {
+  rpc SendLead (LeadRequest) returns (LeadResponse);
+}
+
+message LeadRequest {
+  string business_name = 1;
+  string registered_name = 2;
+  string foundation_date = 3;
+  string address = 4;
+  string city = 5;
+  string state = 6;
+  string country = 7;
+  string zip_code = 8;
+  string owner = 9;
+  string source = 10;
+  string phone = 11;
+  string whatsapp = 12;
+  string website = 13;
+  string email = 14;
+  string instagram = 15;
+  string facebook = 16;
+  string tiktok = 17;
+  string company_registration_id = 18;
+  float rating = 19;
+  float price_level = 20;
+  int32 user_ratings_total = 21;
+}
+
+message LeadResponse {
+  string message = 1;
+  bool success = 2;
+}  
