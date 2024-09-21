@@ -8,7 +8,7 @@ option go_package = "/leadpb";
 
 
 service LeadService {
-  rpc SendLead (LeadRequest) returns (LeadResponse);
+  rpc ReceiveLead (LeadRequest) returns (LeadResponse);
 }
 
 message LeadRequest {

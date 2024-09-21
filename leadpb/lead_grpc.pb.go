@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	LeadService_SendLead_FullMethodName = "/leadpb.LeadService/SendLead"
+	LeadService_ReceiveLead_FullMethodName = "/leadpb.LeadService/ReceiveLead"
 )
 
 // LeadServiceClient is the client API for LeadService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LeadServiceClient interface {
-	SendLead(ctx context.Context, in *LeadRequest, opts ...grpc.CallOption) (*LeadResponse, error)
+	ReceiveLead(ctx context.Context, in *LeadRequest, opts ...grpc.CallOption) (*LeadResponse, error)
 }
 
 type leadServiceClient struct {
@@ -37,10 +37,10 @@ func NewLeadServiceClient(cc grpc.ClientConnInterface) LeadServiceClient {
 	return &leadServiceClient{cc}
 }
 
-func (c *leadServiceClient) SendLead(ctx context.Context, in *LeadRequest, opts ...grpc.CallOption) (*LeadResponse, error) {
+func (c *leadServiceClient) ReceiveLead(ctx context.Context, in *LeadRequest, opts ...grpc.CallOption) (*LeadResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(LeadResponse)
-	err := c.cc.Invoke(ctx, LeadService_SendLead_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, LeadService_ReceiveLead_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *leadServiceClient) SendLead(ctx context.Context, in *LeadRequest, opts 
 // All implementations must embed UnimplementedLeadServiceServer
 // for forward compatibility.
 type LeadServiceServer interface {
-	SendLead(context.Context, *LeadRequest) (*LeadResponse, error)
+	ReceiveLead(context.Context, *LeadRequest) (*LeadResponse, error)
 	mustEmbedUnimplementedLeadServiceServer()
 }
 
@@ -62,8 +62,8 @@ type LeadServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedLeadServiceServer struct{}
 
-func (UnimplementedLeadServiceServer) SendLead(context.Context, *LeadRequest) (*LeadResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SendLead not implemented")
+func (UnimplementedLeadServiceServer) ReceiveLead(context.Context, *LeadRequest) (*LeadResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReceiveLead not implemented")
 }
 func (UnimplementedLeadServiceServer) mustEmbedUnimplementedLeadServiceServer() {}
 func (UnimplementedLeadServiceServer) testEmbeddedByValue()                     {}
@@ -86,20 +86,20 @@ func RegisterLeadServiceServer(s grpc.ServiceRegistrar, srv LeadServiceServer) {
 	s.RegisterService(&LeadService_ServiceDesc, srv)
 }
 
-func _LeadService_SendLead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LeadService_ReceiveLead_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(LeadRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LeadServiceServer).SendLead(ctx, in)
+		return srv.(LeadServiceServer).ReceiveLead(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: LeadService_SendLead_FullMethodName,
+		FullMethod: LeadService_ReceiveLead_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LeadServiceServer).SendLead(ctx, req.(*LeadRequest))
+		return srv.(LeadServiceServer).ReceiveLead(ctx, req.(*LeadRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -112,8 +112,8 @@ var LeadService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*LeadServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "SendLead",
-			Handler:    _LeadService_SendLead_Handler,
+			MethodName: "ReceiveLead",
+			Handler:    _LeadService_ReceiveLead_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
