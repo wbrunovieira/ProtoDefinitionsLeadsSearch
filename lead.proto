@@ -3,7 +3,7 @@ syntax = "proto3";
 package leadpb;
 
 
-option go_package = "github.com/wbrunovieira/ProtoDefinitionsLeadsSearch/leadpb";
+option go_package = "/leadpb";
 
 
 
